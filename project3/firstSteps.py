@@ -1,5 +1,5 @@
 import numpy as np
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, word2vec
 import re
 from keras.preprocessing.sequence import pad_sequences
 import time
@@ -33,10 +33,10 @@ def read_wordvecs(filename):
     return word_vecs_np, word2index
 
 #we may have to do
-model = word2vec.Word2Vec.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
-model.save_word2vec_format('GoogleNews-vectors-negative300.txt', binary=False)
+#model = word2vec.Word2Vec.load_word2vec_format('/home/dominik/json/GoogleNews-vectors-negative300.bin', binary=True)
+#model.save_word2vec_format('GoogleNews-vectors-negative300.txt', binary=False)
 
-word_vecs, word2index = read_wordvecs('GoogleNews-vectors-negative300.bin')
+word_vecs, word2index = read_wordvecs('/home/dominik/json/GoogleNews-vectors-negative300.bin')
 #step8
 with open('out.txt') as fin:
     raw_text = fin.read()

@@ -132,7 +132,7 @@ def scoring(fileT):
     suffxs = suf_fixes(input[1:])
     lexical = get_lex(input[1:])
 
-    writer = csv.writer(open("scoring.csv", 'a'))
+    writer = csv.writer(open("scoring3.csv", 'a'))
 
     for line in input[1:]:
         if len(line.split(" ")) > 1:

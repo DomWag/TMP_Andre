@@ -36,7 +36,7 @@ def read_wordvecs(filename):
 #model = word2vec.Word2Vec.load_word2vec_format('/home/dominik/json/GoogleNews-vectors-negative300.bin', binary=True)
 #model.save_word2vec_format('GoogleNews-vectors-negative300.txt', binary=False)
 
-word_vecs, word2index = read_wordvecs('/home/dominik/json/GoogleNews-vectors-negative300.bin')
+word_vecs, word2index = read_wordvecs("B:\\Users\\Dominik Wagner\\Downloads\\GoogleNews-vectors-negative300.bin\\GoogleNews-vectors-negative300.bin")
 #step8
 with open('out.txt') as fin:
     raw_text = fin.read()

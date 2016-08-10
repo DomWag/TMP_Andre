@@ -1,9 +1,11 @@
 #checks word start is upper or not
 import csv
 import re
-
-#from geotext.geotext import GeoText
+import unicodedata as ud
+from geotext.geotext import GeoText
 from nltk.corpus import names
+
+DATA_1 = "Dutch/ned.train"
 
 
 def feature_Cap(word):
@@ -14,12 +16,14 @@ def feature_Cap(word):
 
 #checks if word is name or location
 def feature_nameList(word):
-    if word[0] in names.words('male.txt'):
+    for name_m in names.words('male.txt'):
+        if word[0].decode('unicode-escape') == name_m.decode('unicode-escape'):
+            return 1
+    for name_m in names.words('female.txt'):
+        if word[0].decode('unicode-escape') == name_m.decode('unicode-escape'):
+            return 1
+    if len(GeoText(word[0]).cities)>0 or len(GeoText(word[0]).countries)>0:
         return 1
-    elif word[0] in names.words('female.txt'):
-        return 1
-    #elif len(GeoText(word[0]).cities)>0 or len(GeoText(word[0]).countries)>0:
-     #   return 1
     else:
         return 0
 
@@ -31,7 +35,7 @@ def get_lex(words):
             splitted = line.split()
             lex.add(splitted[0])
     return list(lex)
-lexical = get_lex(open("Dutch/ned.train").readlines())
+lexical = get_lex(open(DATA_1).readlines())
 def features_lexical(words, lexicall):
     len_lex = len(lexicall)
     score = [0]*len_lex
@@ -66,7 +70,7 @@ def pre_fixes(words):
             prefixes.add(feature_prefix(line.split(" ")[0]))
     prefixes = list(prefixes)
     return prefixes
-pre_fix = pre_fixes(open("Dutch/ned.train").readlines())
+pre_fix = pre_fixes(open(DATA_1).readlines())
 def feature_prefixxx(words, prefixs):
     len_pre = len(prefixs)
     score = [0] * len_pre
@@ -76,7 +80,7 @@ def feature_prefixxx(words, prefixs):
             score[ind] = 1
     return score
 
-suf_fix = suf_fixes(open("Dutch/ned.train").readlines())
+suf_fix = suf_fixes(open(DATA_1).readlines())
 def feature_suffixxx(words, suffixs):
     len_suf = len(suffixs)
     score = [0] * len_suf
@@ -94,7 +98,7 @@ def get_classes(words):
             splitted = line.split(" ")
             classes.add(splitted[0])
     return list(classes)
-classes = get_classes(open("Dutch/ned.train").readlines())
+classes = get_classes(open(DATA_1).readlines())
 prevClas = []
 def feature_class(words):
     len_classes = len(classes)
@@ -132,11 +136,11 @@ def scoring(fileT):
     suffxs = suf_fixes(input[1:])
     lexical = get_lex(input[1:])
 
-    writer = csv.writer(open("scoring2.csv", 'a'))
+    writer = csv.writer(open("/home/dominik/projects_save/scoring_train_small.csv", 'a'))
 
     for line in input[1:]:
         if len(line.split(" ")) > 1:
-            print(line)
+            #print(line)
             score = []
             scoreCap = feature_Cap(line)
             score.append(int(scoreCap))
@@ -148,20 +152,22 @@ def scoring(fileT):
             score.append(scoreDig)
             scorehyp = feature_hyphened(line)
             score.append(scorehyp)
-            scoreLex = features_lexical(line, lexical)
-            for sc in scoreLex:
-                score.append(sc)
-            scoreSuf = feature_suffixxx(line, suffxs)
-            for sc in scoreSuf:
-                score.append(sc)
-            scorePre = feature_prefixxx(line, prefixs)
-            for sc in scorePre:
-                score.append(sc)
-            scoreClas = feature_class(line)
-            for sc in scoreClas:
-                score.append(sc)
+            # scoreLex = features_lexical(line, lexical)
+            # for sc in scoreLex:
+            #     score.append(sc)
+            # scoreSuf = feature_suffixxx(line, suffxs)
+            # for sc in scoreSuf:
+            #     score.append(sc)
+            # scorePre = feature_prefixxx(line, prefixs)
+            # for sc in scorePre:
+            #     score.append(sc)
+            # scoreClas = feature_class(line)
+            # for sc in scoreClas:
+            #     score.append(sc)
             score.append(line.split()[2])
             writer.writerow(score)
+            print(line.split()[2])
+            print(len(score))
     prevClas = []
-scoring("Dutch/ned.testa")
+scoring("Dutch/ned.train")
 

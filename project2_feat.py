@@ -132,7 +132,7 @@ def scoring(fileT):
     suffxs = suf_fixes(input[1:])
     lexical = get_lex(input[1:])
 
-    writer = csv.writer(open("scoring.csv", 'a'))
+    writer = csv.writer(open("scoring2.csv", 'a'))
 
     for line in input[1:]:
         if len(line.split(" ")) > 1:
@@ -148,14 +148,18 @@ def scoring(fileT):
             score.append(scoreDig)
             scorehyp = feature_hyphened(line)
             score.append(scorehyp)
-            #scoreLex = features_lexical(line, lexical)
-            #score.append(scoreLex)
-            #scoreSuf = feature_suffixxx(line, suffxs)
-            #score.append(scoreSuf)
-            #scorePre = feature_prefixxx(line, prefixs)
-            #score.append(scorePre)
-            #scoreClas = feature_class(line)
-            #score.append(scoreClas)
+            scoreLex = features_lexical(line, lexical)
+            for sc in scoreLex:
+                score.append(sc)
+            scoreSuf = feature_suffixxx(line, suffxs)
+            for sc in scoreSuf:
+                score.append(sc)
+            scorePre = feature_prefixxx(line, prefixs)
+            for sc in scorePre:
+                score.append(sc)
+            scoreClas = feature_class(line)
+            for sc in scoreClas:
+                score.append(sc)
             score.append(line.split()[2])
             writer.writerow(score)
     prevClas = []

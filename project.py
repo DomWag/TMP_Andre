@@ -17,7 +17,7 @@ for t in grammar_used:
     #treetransforms.chomsky_normal_form(t)
     t.chomsky_normal_form()
 
-tbank_productions = treebank.sents()
+tbank_productions = list(treebank.sents())
 test_part = tbank_productions[round(len(tbank_productions) * 0.8):]
 # normalize the c structures
 #for tt in test_part:

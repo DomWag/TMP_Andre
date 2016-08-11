@@ -16,9 +16,9 @@ grammar_used = tbank_productions[:round(len(tbank_productions) * 0.8)]
 for t in grammar_used:
     #treetransforms.chomsky_normal_form(t)
     t.chomsky_normal_form()
-
-tbank_productions = list(treebank.sents())
-test_part = tbank_productions[round(len(tbank_productions) * 0.8):]
+print(round(len(tbank_productions) * 0.8))
+tbank_productions2 = list(treebank.sents()[0:200])
+test_part = tbank_productions2[int(len(tbank_productions) * 0.8):]
 # normalize the c structures
 #for tt in test_part:
     #treetransforms.chomsky_normal_form(tt)
@@ -120,7 +120,7 @@ def buildTree(score, back):
     print(back)
 print(len(test_part[1]))
 print(test_part[1])
-print(CKY(test_part[1:1], grammar))
+print(CKY(test_part[1], grammar))
 #findProb('NNS', 'appliances', prod)
 # CYK(grammar, test_part[1])
 print(grammar.productions()[0].prob())

@@ -8,7 +8,8 @@ import numpy
 treebank.ensure_loaded()
 
 # building the grammar and test set
-tbank_productions = treebank.parsed_sents()
+#TODO here we reduced the tbank productions
+tbank_productions = treebank.parsed_sents()[0:200]
 grammar_used = tbank_productions[:round(len(tbank_productions) * 0.8)]
 
 # normalize the c structures
@@ -118,8 +119,9 @@ def buildTree(score, back):
     print(score)
     print(back)
 print(len(test_part[1]))
-print(CKY(test_part[1], grammar))
-findProb('NNS', 'appliances', prod)
+print(test_part[1])
+print(CKY(test_part[1:1], grammar))
+#findProb('NNS', 'appliances', prod)
 # CYK(grammar, test_part[1])
 print(grammar.productions()[0].prob())
 print(len(grammar.productions()))

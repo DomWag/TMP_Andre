@@ -3,7 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import sklearn as sklearn
-
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 
 class LogisticRegression(object):
     """LogisticRegression classifier.
@@ -148,14 +149,8 @@ for i in y_pred:
 print (y_pred)
 print(counter)
 def get_accuracy():
-    #devide the number of right guesses by the length of the list of right guesses
-
-    if (len([i for i, j in zip(y_ref, y_pred) if i == j]))>0:
-        return (len([i for i, j in zip(y_ref, y_pred) if i == j])) / len(y_ref)
-    else:
-        return 0
-y_ref = [0,1,2,3,4,5]
-y_pred =[0,1,2,3,5,4]
+    return accuracy_score(y_ref, y_pred)
 def get_F1():
     return sklearn.metrics.f1_score(y_ref, y_pred)
-print(get_F1())
+def get_confusionMatrix():
+    confusion_matrix(y_ref, y_pred)

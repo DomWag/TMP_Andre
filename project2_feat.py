@@ -5,7 +5,6 @@ import unicodedata as ud
 from geotext.geotext import GeoText
 from nltk.corpus import names
 
-DATA_1 = "Dutch/ned.testa"
 
 
 def feature_Cap(word):
@@ -35,7 +34,6 @@ def get_lex(words):
             splitted = line.split()
             lex.add(splitted[0])
     return list(lex)
-lexical = get_lex(open(DATA_1).readlines())
 def features_lexical(words, lexicall):
     len_lex = len(lexicall)
     score = [0]*len_lex
@@ -70,7 +68,6 @@ def pre_fixes(words):
             prefixes.add(feature_prefix(line.split(" ")[0]))
     prefixes = list(prefixes)
     return prefixes
-pre_fix = pre_fixes(open(DATA_1).readlines())
 def feature_prefixxx(words, prefixs):
     len_pre = len(prefixs)
     score = [0] * len_pre
@@ -80,7 +77,6 @@ def feature_prefixxx(words, prefixs):
             score[ind] = 1
     return score
 
-suf_fix = suf_fixes(open(DATA_1).readlines())
 def feature_suffixxx(words, suffixs):
     len_suf = len(suffixs)
     score = [0] * len_suf
@@ -96,17 +92,18 @@ def get_classes(words):
     for line in words:
         if len(line.split(" "))>1:
             splitted = line.split(" ")
-            classes.add(splitted[0])
+            classes.add(splitted[1])
     return list(classes)
-classes = get_classes(open(DATA_1).readlines())
 prevClas = []
-def feature_class(words):
+def feature_class(words, classes):
     len_classes = len(classes)
     score = [0] * len_classes
 
     if len(prevClas) >0:
         ind = classes.index(prevClas[len(prevClas)-1])
         score[ind] = 1
+        prevClas.append(words.split(" ")[1])
+    else:
         prevClas.append(words.split(" ")[1])
     return score
 
@@ -128,15 +125,15 @@ def feature_hyphened(word):
         return 0
 
 
-def scoring(fileT):
-
+def scoring(fileT, fileCSV):
 
     input = open(fileT).readlines()
     prefixs = pre_fixes(input[1:])
     suffxs = suf_fixes(input[1:])
     lexical = get_lex(input[1:])
+    classes = get_classes(input[1:])
 
-    writer = csv.writer(open("/home/dominik/projects_save/scoring_testa2_ex_small.csv", 'a'))
+    writer = csv.writer(open(fileCSV, 'a'))
 
     for line in input[1:]:
         if len(line.split(" ")) > 1:
@@ -152,16 +149,20 @@ def scoring(fileT):
             score.append(scoreDig)
             scorehyp = feature_hyphened(line)
             score.append(scorehyp)
+
             # scoreLex = features_lexical(line, lexical)
             # for sc in scoreLex:
             #     score.append(sc)
-            # scoreSuf = feature_suffixxx(line, suffxs)
+
+            # scoreSuf = feature_suffixxx(line, suf_fix)
             # for sc in scoreSuf:
             #     score.append(sc)
-            # scorePre = feature_prefixxx(line, prefixs)
+
+            # scorePre = feature_prefixxx(line, pre_fix)
             # for sc in scorePre:
             #     score.append(sc)
-            # scoreClas = feature_class(line)
+
+            # scoreClas = feature_class(line, classes)
             # for sc in scoreClas:
             #     score.append(sc)
             score.append(line.split()[2])
@@ -169,5 +170,5 @@ def scoring(fileT):
             #print(line.split()[2])
             #print(len(score))
     prevClas = []
-scoring("Dutch/ned.testa")
+scoring("Dutch/ned.testa", "/home/dominik/projects_save/scoring_testa2_ex_small.csv")
 

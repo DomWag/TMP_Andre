@@ -5,7 +5,7 @@ import unicodedata as ud
 from geotext.geotext import GeoText
 from nltk.corpus import names
 
-DATA_1 = "Dutch/ned.train"
+DATA_1 = "Dutch/ned.testa"
 
 
 def feature_Cap(word):
@@ -136,7 +136,7 @@ def scoring(fileT):
     suffxs = suf_fixes(input[1:])
     lexical = get_lex(input[1:])
 
-    writer = csv.writer(open("/home/dominik/projects_save/scoring_train_small.csv", 'a'))
+    writer = csv.writer(open("/home/dominik/projects_save/scoring_testa2_ex_small.csv", 'a'))
 
     for line in input[1:]:
         if len(line.split(" ")) > 1:
@@ -166,8 +166,8 @@ def scoring(fileT):
             #     score.append(sc)
             score.append(line.split()[2])
             writer.writerow(score)
-            print(line.split()[2])
-            print(len(score))
+            #print(line.split()[2])
+            #print(len(score))
     prevClas = []
-scoring("Dutch/ned.train")
+scoring("Dutch/ned.testa")
 

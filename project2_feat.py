@@ -150,25 +150,25 @@ def scoring(fileT, fileCSV):
             scorehyp = feature_hyphened(line)
             score.append(scorehyp)
 
-            # scoreLex = features_lexical(line, lexical)
-            # for sc in scoreLex:
-            #     score.append(sc)
+            scoreLex = features_lexical(line, lexical)
+            for sc in scoreLex:
+                 score.append(sc)
 
-            # scoreSuf = feature_suffixxx(line, suf_fix)
-            # for sc in scoreSuf:
-            #     score.append(sc)
+            scoreSuf = feature_suffixxx(line, suffxs)
+            for sc in scoreSuf:
+                 score.append(sc)
 
-            # scorePre = feature_prefixxx(line, pre_fix)
-            # for sc in scorePre:
-            #     score.append(sc)
+            scorePre = feature_prefixxx(line, prefixs)
+            for sc in scorePre:
+                 score.append(sc)
 
-            # scoreClas = feature_class(line, classes)
-            # for sc in scoreClas:
+            #scoreClas = feature_class(line, classes)
+            #for sc in scoreClas:
             #     score.append(sc)
-            score.append(line.split()[2])
+            score.append(line.split()[1])
             writer.writerow(score)
             #print(line.split()[2])
             #print(len(score))
     prevClas = []
-scoring("Dutch/ned.testa", "/home/dominik/projects_save/scoring_testa2_ex_small.csv")
+scoring("Spanish/esp.train", "/home/dominik/projects_save/scoring_esp_train_big.csv")
 

@@ -1,3 +1,5 @@
+import csv
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -108,49 +110,67 @@ class LogisticRegression(object):
         # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
         return np.where(self.net_input(X) >= 0.0, 1, 0)
 
-df = pd.read_csv("scoring_train_small.csv", header=None)
-
-#y = df.iloc[:, 9].values
-y = df.iloc[:, 5].values
-
-y = np.where(y == 'O', 0, 1)
-counter = 0
-for i in y:
-    if i == 1:
-        counter +=1
-print(counter)
-#X = df.iloc[:, [0,1,2,3,4,5,6,7,8]].values
-depp = []
-for x in range(0,5):
-    depp.append(x)
-print(depp)
-X = df.iloc[:, depp].values
-
-lr = LogisticRegression(n_iter=500, eta=0.2).fit(X, y)
-plt.plot(range(1, len(lr.cost_) + 1), np.log10(lr.cost_))
-print(lr.cost_)
-plt.xlabel('Epochs')
-plt.ylabel('Cost')
-plt.title('Logistic Regression - Learning rate 0.01')
-
-plt.tight_layout()
-plt.show()
-
-df2 = pd.read_csv("/home/dominik/projects_save/scoring_testa2_ex_small.csv", header=None)
-X2 = df2.iloc[:, [0,1,2,3,4]].values
-y_ref = df2.iloc[:, 5].values
-
-y_ref = np.where(y_ref == 'O', 0, 1)
-y_pred = lr.predict(X2)
-counter = 0
-for i in y_pred:
-    if i == 1:
-        counter +=1
-print (y_pred)
-print(counter)
-def get_accuracy():
+def get_accuracy(y_ref, y_pred):
     return accuracy_score(y_ref, y_pred)
-def get_F1():
+def get_F1(y_ref, y_pred):
     return sklearn.metrics.f1_score(y_ref, y_pred)
-def get_confusionMatrix():
+def get_confusionMatrix(y_ref, y_pred):
     confusion_matrix(y_ref, y_pred)
+
+
+def main_start():
+    print("There are three files per language: dutch, spain")
+    print("_train, _testa, _testb")
+
+    exits = False
+    global lri
+    while(not exits):
+        s = raw_input("What do you want to do?")
+        ss = s.split(" ")
+        if "train" in ss[1]:
+            if len(ss)==3:
+                df = pd.read_csv(ss[2], header=None)
+                range_end = len(next(csv.reader(open(ss[2]), delimiter=',')))
+            else:
+                df = pd.read_csv(ss[3], header=None)
+                range_end = len(next(csv.reader(open(ss[3]), delimiter=',')))
+
+
+            depp = []
+
+            for x in range(0, range_end-1):
+                depp.append(x)
+            # print(depp)
+            X = df.iloc[:, depp].values
+            y = df.iloc[:, range_end-1].values
+
+            y = np.where(y == 'O', 0, 1)
+            lri = LogisticRegression(n_iter=500, eta=0.2).fit(X, y)
+            if "learning_curve" in s:
+                plt.plot(range(1, len(lri.cost_) + 1), np.log10(lri.cost_))
+                plt.xlabel('Epochs')
+                plt.ylabel('Cost')
+                plt.title('Logistic Regression - Learning rate 0.01')
+
+                plt.tight_layout()
+                plt.show()
+        elif "test" in ss[1]:
+            if lri is not None:
+                df = pd.read_csv(ss[2], header=None)
+                range_end = len(next(csv.reader(open(ss[2]), delimiter=',')))
+                depp = []
+
+                for x in range(0, range_end - 1):
+                    depp.append(x)
+                X = df.iloc[:, depp].values
+                y_ref = df.iloc[:, range_end-1].values
+
+                y_ref = np.where(y_ref == 'O', 0, 1)
+                y_pred = lri.predict(X)
+
+                print (get_accuracy(y_ref, y_pred))
+                print (get_F1(y_ref, y_pred))
+                print (get_confusionMatrix(y_ref, y_pred))
+        else:
+            exits = True
+main_start()

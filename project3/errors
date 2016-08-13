@@ -1,0 +1,19 @@
+Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)
+
+
+/home/dominik/json/TMP_Andre/project3/firstSteps.py:70: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+  training_set=sentences[:round(len(sentences) * 0.8)]
+/home/dominik/json/TMP_Andre/project3/firstSteps.py:71: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+  test_set = sentences[round(len(sentences) * 0.8):]
+Traceback (most recent call last):
+  File "/home/dominik/json/TMP_Andre/project3/firstSteps.py", line 134, in <module>
+    model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
+  File "/home/dominik/.local/lib/python2.7/site-packages/keras/models.py", line 413, in fit
+    sample_weight=sample_weight)
+  File "/home/dominik/.local/lib/python2.7/site-packages/keras/engine/training.py", line 1011, in fit
+    batch_size=batch_size)
+  File "/home/dominik/.local/lib/python2.7/site-packages/keras/engine/training.py", line 938, in _standardize_user_data
+    exception_prefix='model input')
+  File "/home/dominik/.local/lib/python2.7/site-packages/keras/engine/training.py", line 107, in standardize_input_data
+    str(array.shape))
+Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)

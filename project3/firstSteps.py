@@ -1,18 +1,14 @@
-import numpy as np
-from gensim.models import Word2Vec, word2vec
 import re
+import sys
+import time
 
+import numpy as np
 from keras.layers import Embedding, LSTM, Dense, TimeDistributed
 from keras.models import Sequential
 from keras.preprocessing.sequence import pad_sequences
-import time
-import sys
-
 from keras.regularizers import l2
-from keras.utils import np_utils
 
 import BIOF1Validation
-import GermEvalReader
 
 
 def read_wordvecs(filename):
@@ -98,10 +94,16 @@ n_in = 2*windowSize+1
 n_hidden = numHiddenUnits
 n_out = len(label2index)
 
-train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
-test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
-train_y_cat = np_utils.to_categorical(train_y, n_out)
+#train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
+train_x =  training_set
+train_y = training_set[:-1]
+np.append(train_y, word2index['EOS'])
 
+#test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
+#train_y_cat = np_utils.to_categorical(train_y, n_out)
+test_x =  test_set
+test_y = test_set[:-1]
+np.append(test_y, word2index['EOS'])
 
 number_of_epochs = 10
 batch_size = 35
@@ -129,7 +131,7 @@ for epoch in range(number_of_epochs):
     start_time = time.time()
 
     # Train for 1 epoch
-    model.fit(training_set, train_y_cat, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
+    model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
     print("%.2f sec for training" % (time.time() - start_time))
     sys.stdout.flush()
 

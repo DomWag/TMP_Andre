@@ -1,0 +1,11 @@
+Some hints how to use the programm:
+first you have to convert the delivered test and train files of Dutch and Spanish with project2_feat into a scored csv
+file.
+Therefore you have to change the last line in this programm and type the name of the file which should be convert and
+the location of the converted file.
+In project2_classifier the actually work is happening:
+you have the following possiblies:
+1) ner -train -learning_curve scoring_esp_train_big.csv
+2) ner -train scoring_esp_train_big.csv
+3) ner -test scoring_esp_testa_big.csv
+(The last part is the name of the csv file you have created before.)

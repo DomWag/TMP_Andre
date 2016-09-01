@@ -150,18 +150,19 @@ def scoring(fileT, fileCSV):
             scorehyp = feature_hyphened(line)
             score.append(scorehyp)
 
-            #scoreLex = features_lexical(line, lexical)
-            #for sc in scoreLex:
-            #     score.append(sc)
+            scoreLex = features_lexical(line, lexical)
+            for sc in scoreLex:
+                 score.append(sc)
 
-            #scoreSuf = feature_suffixxx(line, suffxs)
-            #for sc in scoreSuf:
-             #    score.append(sc)
+            scoreSuf = feature_suffixxx(line, suffxs)
+            for sc in scoreSuf:
+                 score.append(sc)
 
-            #scorePre = feature_prefixxx(line, prefixs)
-            #for sc in scorePre:
-            #     score.append(sc)
+            scorePre = feature_prefixxx(line, prefixs)
+            for sc in scorePre:
+                 score.append(sc)
 
+            #class was not possible because of esp does not contain class information
             #scoreClas = feature_class(line, classes)
             #for sc in scoreClas:
             #     score.append(sc)

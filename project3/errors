@@ -17,3 +17,8 @@ Traceback (most recent call last):
   File "/home/dominik/.local/lib/python2.7/site-packages/keras/engine/training.py", line 107, in standardize_input_data
     str(array.shape))
 Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)
+
+
+TODO 70/71 to int
+TODO 113/114 input/output dim, input length check, go away from n_in
+TODO Hint 12 evaluate model perplexity: predict_proba use!

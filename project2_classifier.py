@@ -115,7 +115,7 @@ def get_accuracy(y_ref, y_pred):
 def get_F1(y_ref, y_pred):
     return sklearn.metrics.f1_score(y_ref, y_pred)
 def get_confusionMatrix(y_ref, y_pred):
-    confusion_matrix(y_ref, y_pred)
+    return confusion_matrix(y_ref, y_pred)
 
 
 def main_start():

@@ -65,7 +65,7 @@ for sen in sentences:
         part.append(returnIndex(pa))
     sent.append(part)
 sentences = sent
-sentences = pad_sequences(sentences)
+sentences = pad_sequences(sentences)[:50]
 
 training_set=sentences[:round(len(sentences) * 0.8)]
 test_set = sentences[round(len(sentences) * 0.8):]

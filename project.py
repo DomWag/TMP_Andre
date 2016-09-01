@@ -9,15 +9,15 @@ treebank.ensure_loaded()
 
 # building the grammar and test set
 #TODO here we reduced the tbank productions
-tbank_productions = treebank.parsed_sents()[0:200]
-grammar_used = tbank_productions[:round(len(tbank_productions) * 0.8)]
+tbank_productions = treebank.parsed_sents()[0:20]
+grammar_used = tbank_productions[:int(len(tbank_productions) * 0.8)]
 
 # normalize the c structures
 for t in grammar_used:
     #treetransforms.chomsky_normal_form(t)
     t.chomsky_normal_form()
-print(round(len(tbank_productions) * 0.8))
-tbank_productions2 = list(treebank.sents()[0:200])
+#print(round(len(tbank_productions) * 0.8))
+tbank_productions2 = list(treebank.sents()[0:20])
 test_part = tbank_productions2[int(len(tbank_productions) * 0.8):]
 # normalize the c structures
 #for tt in test_part:
@@ -34,7 +34,7 @@ for t in grammar_used:
 S = nltk.Nonterminal("S")
 grammar = nltk.induce_pcfg(S, productions)
 #TODO here the grammar is not in chomsky normal form
-print(grammar.is_chomsky_normal_form())
+#print(grammar.is_chomsky_normal_form())
 prod = grammar.productions()
 
 
@@ -52,7 +52,7 @@ def CKY(words, grammar):
     lenwords = len(words)
     nonterms = list(nonterms)
     nontermsc = len(nonterms)
-    print(lenwords)
+    #print(lenwords)
     score = numpy.zeros((lenwords+1,lenwords+1,nontermsc))
     back = numpy.zeros((lenwords+1,lenwords+1,nontermsc))
     for i in range(0, lenwords):
@@ -61,10 +61,10 @@ def CKY(words, grammar):
             if len(pp)>0 :
 
                 score[i][i + 1][nonterms.index(A)] = pp[0].prob()
-                print(pp[0].prob())
+                #print(pp[0].prob())
 
         # handle unaries
-        print("uni")
+        #print("uni")
         added = True
         while added:
             added = False

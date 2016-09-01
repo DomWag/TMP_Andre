@@ -19,6 +19,6 @@ Traceback (most recent call last):
 Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)
 
 
-TODO 70/71 to int
-TODO 113/114 input/output dim, input length check, go away from n_in
-TODO Hint 12 evaluate model perplexity: predict_proba use!
+TODO1 70/71 to int
+TODO2 113/114 input/output dim, input length check, go away from n_in
+TODO3 Hint 12 evaluate model perplexity: predict_proba use!

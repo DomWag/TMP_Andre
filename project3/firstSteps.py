@@ -69,6 +69,7 @@ sentences = pad_sequences(sentences)
 
 training_set=sentences[:round(len(sentences) * 0.8)]
 test_set = sentences[round(len(sentences) * 0.8):]
+#Todo is this here right?
 windowSize = 2 # 2 to the left, 2 to the right
 numHiddenUnits = 100
 
@@ -96,14 +97,14 @@ n_out = len(label2index)
 
 #train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
 train_x =  training_set
-train_y = training_set[:-1]
-np.append(train_y, word2index['EOS'])
+train_y = training_set[1:]
+train_y = np.append(train_y, word2index['EOS'])
 
 #test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
 #train_y_cat = np_utils.to_categorical(train_y, n_out)
 test_x =  test_set
-test_y = test_set[:-1]
-np.append(test_y, word2index['EOS'])
+test_y = test_set[1:]
+test_y = np.append(test_y, word2index['EOS'])
 
 number_of_epochs = 10
 batch_size = 35

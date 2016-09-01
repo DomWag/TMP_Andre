@@ -8,7 +8,7 @@ import numpy
 treebank.ensure_loaded()
 
 # building the grammar and test set
-#TODO4 here we reduced the tbank productions
+#TODO here we reduced the tbank productions
 tbank_productions = treebank.parsed_sents()[0:200]
 grammar_used = tbank_productions[:round(len(tbank_productions) * 0.8)]
 
@@ -33,7 +33,7 @@ for t in grammar_used:
 # induce PCFG
 S = nltk.Nonterminal("S")
 grammar = nltk.induce_pcfg(S, productions)
-#TODO5 here the grammar is not in chomsky normal form
+#TODO here the grammar is not in chomsky normal form
 print(grammar.is_chomsky_normal_form())
 prod = grammar.productions()
 

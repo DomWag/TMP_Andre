@@ -115,9 +115,9 @@ def CKY(words, grammar):
                                 added = True
     return buildTree(score, back)
 
-def buildTree(score, back):
-    print(score)
-    print(back)
+#def buildTree(score, back):
+#    print(score)
+ #   print(back)
 print(len(test_part[1]))
 print(test_part[1])
 print(CKY(test_part[1], grammar))

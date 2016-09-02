@@ -1,4 +1,4 @@
-Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)
+Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (40, 16364)
 
 
 /usr/bin/python2.7 /home/dominik/json/TMP_Andre/project3/firstSteps.py
@@ -18,7 +18,7 @@ Traceback (most recent call last):
     exception_prefix='model input')
   File "/home/dominik/.local/lib/python2.7/site-packages/keras/engine/training.py", line 107, in standardize_input_data
     str(array.shape))
-Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (50002, 16364)
+Exception: Error when checking model input: expected embedding_input_1 to have shape (None, 5) but got array with shape (40, 16364)
 
 
 TODO 70/71 to int

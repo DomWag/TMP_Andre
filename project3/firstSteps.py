@@ -100,9 +100,11 @@ n_out = len(label2index)
 print("nout"+str(n_out))
 #train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
 train_x =  training_set
+#train_x = np.array(train_x).reshape((1,len(train_x),len(train_x[0])))
 train_y = training_set[1:]
 train_y = np.append(train_y, word2index['EOS'])
 train_y_cat = np_utils.to_categorical(train_y, n_out)
+#train_y_cat = np.array(train_y_cat).reshape((1,len(train_y_cat),len(train_y_cat[0])))
 #test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
 #train_y_cat = np_utils.to_categorical(train_y, n_out)
 test_x =  test_set

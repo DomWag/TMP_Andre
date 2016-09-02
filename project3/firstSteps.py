@@ -68,11 +68,10 @@ for sen in sentences:
 sentences = sent
 sentences = pad_sequences(sentences)[:10]
 
-training_set=sentences[:round(len(sentences) * 0.8)]
-test_set = sentences[round(len(sentences) * 0.8):]
+training_set=sentences[:int(len(sentences) * 0.8)]
+test_set = sentences[int(len(sentences) * 0.8):]
 
 #Todo is this here right?
-windowSize = 2 # 2 to the left, 2 to the right
 numHiddenUnits = 100
 
 # Create a mapping for our labels
@@ -98,7 +97,7 @@ n_in = len(sentences[0])
 
 n_hidden = numHiddenUnits
 n_out = len(label2index)
-
+print("nout"+str(n_out))
 #train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
 train_x =  training_set
 train_y = training_set[1:]
@@ -112,7 +111,7 @@ test_y = np.append(test_y, word2index['EOS'])
 
 number_of_epochs = 10
 batch_size = 35
-
+print(word_vecs.shape[0])
 model = Sequential()
 
 model.add(Embedding(output_dim=word_vecs.shape[1], input_dim=word_vecs.shape[0],

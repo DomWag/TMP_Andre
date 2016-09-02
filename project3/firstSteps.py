@@ -66,7 +66,7 @@ for sen in sentences:
         part.append(returnIndex(pa))
     sent.append(part)
 sentences = sent
-sentences = pad_sequences(sentences)[:50]
+sentences = pad_sequences(sentences)[:10]
 
 training_set=sentences[:round(len(sentences) * 0.8)]
 test_set = sentences[round(len(sentences) * 0.8):]
@@ -93,7 +93,9 @@ index2label = {v: k for k, v in label2index.items()}
 
 
 
-n_in = 2*windowSize+1
+#n_in = 2*windowSize+1
+n_in = len(sentences[0])
+
 n_hidden = numHiddenUnits
 n_out = len(label2index)
 
@@ -143,6 +145,6 @@ for epoch in range(number_of_epochs):
     # Compute precision, recall, F1 on dev & test data
     pre_test, rec_test, f1_test = BIOF1Validation.compute_f1(model.predict_classes(test_x, verbose=0), test_y,
                                                              index2label)
-
+    probs = model.p
     print("%d epoch: F1 on dev: %f, F1 on test: %f" % (epoch + 1, f1_test))
     sys.stdout.flush()

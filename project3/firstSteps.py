@@ -7,6 +7,7 @@ from keras.layers import Embedding, LSTM, Dense, TimeDistributed
 from keras.models import Sequential
 from keras.preprocessing.sequence import pad_sequences
 from keras.regularizers import l2
+from keras.utils import np_utils
 
 import BIOF1Validation
 
@@ -69,6 +70,7 @@ sentences = pad_sequences(sentences)[:50]
 
 training_set=sentences[:round(len(sentences) * 0.8)]
 test_set = sentences[round(len(sentences) * 0.8):]
+
 #Todo is this here right?
 windowSize = 2 # 2 to the left, 2 to the right
 numHiddenUnits = 100
@@ -99,7 +101,7 @@ n_out = len(label2index)
 train_x =  training_set
 train_y = training_set[1:]
 train_y = np.append(train_y, word2index['EOS'])
-
+train_y_cat = np_utils.to_categorical(train_y, n_out)
 #test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
 #train_y_cat = np_utils.to_categorical(train_y, n_out)
 test_x =  test_set
@@ -132,7 +134,9 @@ for epoch in range(number_of_epochs):
     start_time = time.time()
 
     # Train for 1 epoch
-    model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
+    #old
+    #model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
+    model.fit(train_x, train_y_cat, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
     print("%.2f sec for training" % (time.time() - start_time))
     sys.stdout.flush()
 

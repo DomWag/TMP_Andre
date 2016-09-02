@@ -9,7 +9,7 @@ treebank.ensure_loaded()
 
 # building the grammar and test set
 #TODO here we reduced the tbank productions
-tbank_productions = treebank.parsed_sents()[0:20]
+tbank_productions = treebank.parsed_sents()[0:8]
 grammar_used = tbank_productions[:int(len(tbank_productions) * 0.8)]
 
 # normalize the c structures
@@ -17,7 +17,7 @@ for t in grammar_used:
     #treetransforms.chomsky_normal_form(t)
     t.chomsky_normal_form()
 #print(round(len(tbank_productions) * 0.8))
-tbank_productions2 = list(treebank.sents()[0:20])
+tbank_productions2 = list(treebank.sents()[0:8])
 test_part = tbank_productions2[int(len(tbank_productions) * 0.8):]
 # normalize the c structures
 #for tt in test_part:
@@ -98,7 +98,7 @@ def CKY(words, grammar):
                                     score[begin][end][nonterms.index(A)] = prob
                                     tripleV = (splint, B, C)
                                     triples.append(tripleV)
-                                    back[begin][end][nonterms.index(A)] = tripleV.index(tripleV)
+                                    back[begin][end][nonterms.index(A)] = triples.index(tripleV)
                         # handle unaries
             added = True
             while added:

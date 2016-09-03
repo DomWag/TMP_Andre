@@ -67,12 +67,13 @@ for sen in sentences:
         part.append(returnIndex(pa))
     sent.append(part)
 sentences = sent
+#Todo remove [:10]
 sentences = pad_sequences(sentences)[:10]
 
 training_set=sentences[:int(len(sentences) * 0.8)]
 test_set = sentences[int(len(sentences) * 0.8):]
 
-#Todo is this here right?
+
 numHiddenUnits = 100
 
 # Create a mapping for our labels

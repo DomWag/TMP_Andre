@@ -8,6 +8,7 @@ from keras.models import Sequential
 from keras.preprocessing.sequence import pad_sequences
 from keras.regularizers import l2
 from keras.utils import np_utils
+from __future__ import division
 
 import BIOF1Validation
 
@@ -117,7 +118,7 @@ print(word_vecs.shape[0])
 model = Sequential()
 
 model.add(Embedding(output_dim=word_vecs.shape[1], input_dim=word_vecs.shape[0],
-                    input_length=n_in,  weights=[word_vecs], mask_zero=False))
+                    input_length=n_in,  input_shape=(114549,25),weights=[word_vecs], mask_zero=False))
 model.add(LSTM(n_hidden, W_regularizer=l2(0.0001), U_regularizer=l2(0.0001), return_sequences=True))
 model.add(TimeDistributed(Dense(n_out, activation='softmax', W_regularizer=l2(0.0001))))
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
@@ -144,8 +145,13 @@ for epoch in range(number_of_epochs):
     sys.stdout.flush()
 
     # Compute precision, recall, F1 on dev & test data
-    pre_test, rec_test, f1_test = BIOF1Validation.compute_f1(model.predict_classes(test_x, verbose=0), test_y,
-                                                             index2label)
-    probs = model.p
-    print("%d epoch: F1 on dev: %f, F1 on test: %f" % (epoch + 1, f1_test))
+    #pre_test, rec_test, f1_test = BIOF1Validation.compute_f1(model.predict_classes(test_x, verbose=0), test_y,
+                                                         #index2label)
+    probs = model.predict_proba(test_x)
+    prob_prod = np.prod(probs)
+    size_prob = probs.size
+    invert_size = 1/size_prob
+    print("perplexity is"+str(pow(prob_prod, -invert_size)))
+
+    #print("%d epoch: F1 on dev: %f, F1 on test: %f" % (epoch + 1, f1_test))
     sys.stdout.flush()

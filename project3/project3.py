@@ -47,7 +47,7 @@ def returnIndex(word):
     else:
         return word2index['UNK']
 
-#step8
+
 with open('out.txt') as fin:
     raw_text = fin.read()
 
@@ -60,6 +60,7 @@ sentences = [s.strip() for s in sentences if len(s.strip()) > 0]
 # Tokenize sentences (simple space tokenizer) and lower case them
 sentences = [[w.lower() for w in s.split()] for s in sentences]
 
+#step 8, get the index of each token in the dataset
 sent = []
 for sen in sentences:
     part =[]
@@ -67,9 +68,9 @@ for sen in sentences:
         part.append(returnIndex(pa))
     sent.append(part)
 sentences = sent
-#Todo remove [:10]
-sentences = pad_sequences(sentences)[:10]
+sentences = pad_sequences(sentences)
 
+#split the dataset according to step9
 training_set=sentences[:int(len(sentences) * 0.8)]
 test_set = sentences[int(len(sentences) * 0.8):]
 
@@ -93,29 +94,23 @@ index2label = {v: k for k, v in label2index.items()}
 
 
 
-
-#n_in = 2*windowSize+1
+#the n in is the length of one sentence.
 n_in = len(sentences[0])
 
 n_hidden = numHiddenUnits
 n_out = len(label2index)
-print("nout"+str(n_out))
-#train_x, train_y = GermEvalReader.createNumpyArray(training_set, windowSize, word2index, label2index)
+
 train_x =  training_set
-#train_x = np.array(train_x).reshape((1,len(train_x),len(train_x[0])))
 train_y = training_set[1:]
 train_y = np.append(train_y, word2index['EOS'])
 train_y_cat = np_utils.to_categorical(train_y, n_out)
-#train_y_cat = np.array(train_y_cat).reshape((1,len(train_y_cat),len(train_y_cat[0])))
-#test_x, test_y = GermEvalReader.createNumpyArray(test_set, windowSize, word2index, label2index)
-#train_y_cat = np_utils.to_categorical(train_y, n_out)
+
 test_x =  test_set
 test_y = test_set[1:]
 test_y = np.append(test_y, word2index['EOS'])
 
 number_of_epochs = 10
 batch_size = 35
-print(word_vecs.shape[0])
 model = Sequential()
 
 model.add(Embedding(output_dim=word_vecs.shape[1], input_dim=word_vecs.shape[0],
@@ -139,20 +134,16 @@ for epoch in range(number_of_epochs):
     start_time = time.time()
 
     # Train for 1 epoch
-    #old
-    #model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
+
     model.fit(train_x, train_y_cat, nb_epoch=1, batch_size=batch_size, verbose=False, shuffle=True)
     print("%.2f sec for training" % (time.time() - start_time))
     sys.stdout.flush()
 
-    # Compute precision, recall, F1 on dev & test data
-    #pre_test, rec_test, f1_test = BIOF1Validation.compute_f1(model.predict_classes(test_x, verbose=0), test_y,
-                                                         #index2label)
+   #get the perplexity
     probs = model.predict_proba(test_x)
     prob_prod = np.prod(probs)
     size_prob = probs.size
     invert_size = 1/size_prob
     print("perplexity is"+str(pow(prob_prod, -invert_size)))
 
-    #print("%d epoch: F1 on dev: %f, F1 on test: %f" % (epoch + 1, f1_test))
     sys.stdout.flush()

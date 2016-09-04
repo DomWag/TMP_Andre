@@ -1,0 +1,15 @@
+Some hints and comments on project1:
+First of all I want to emphasize that I worked for more than 30 hours on this project.
+I asked Fred many times for help and received it - thanks. My last email from Friday(2.9.) was unfortunately not
+answered yet.
+I really stuck at the point to build the c structure. I watched again and again the video
+https://youtu.be/MiEKnFyErbQ?t=18m25s and try to figure it out, invest the whole day today, but unfortunately I have no
+clue how to solve it.
+One way could be on line 86, to save both the start and the end of a span. I didn't had the time to investigate this.
+
+I decided to hand it in anyway, because the deadline is tomorrow and I'll be by my grandmother from tomorrow on for
+about a week.
+Because of the huge computation time I was not able to really test it, but it should give you the probability of a
+parsing.
+So one working input would be:
+cky_parser -p <sentence>

@@ -9,3 +9,4 @@ you have the following possiblies:
 2) ner -train scoring_esp_train_big.csv
 3) ner -test scoring_esp_testa_big.csv
 (The last part is the name of the csv file you have created before.)
+
